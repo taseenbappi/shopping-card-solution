@@ -10,6 +10,7 @@ function getCount(isIncrement, inputCount, pdtPriceOf, newPrice) {
         let newCountValue = countValue + 1;
         countInput.value = newCountValue;
         pdtPrice.innerText = newCountValue * pdtPriceOf;
+
     }
 
     else if (countValue > 1) {
@@ -18,6 +19,7 @@ function getCount(isIncrement, inputCount, pdtPriceOf, newPrice) {
         countInput.value = newCountValue;
         pdtPrice.innerText = newCountValue * pdtPriceOf;
     }
+    setSubTotal();
 }
 //subtotal calculation
 function setSubTotal() {
@@ -28,41 +30,53 @@ function setSubTotal() {
     const casePrice = document.getElementById('case-price');
     const casePriceTxt = casePrice.innerText;
     const casePriceVal = parseInt(casePriceTxt);
+
     const totalPrice = phonPriceVal + casePriceVal;
 
     const subtotal = document.getElementById('subtotal-val');
-    const subtotalTxt = subtotal.innerText;
-    const subtotalVal = parseInt(subtotalTxt);
+    subtotal.innerText = totalPrice;
+    getTotalPrice();
 
-    const totalPriceNew = totalPrice + subtotalVal;
-    subtotal.innerText = totalPriceNew;
 
 }
+//tax & total calculate
+function getTotalPrice() {
+    const subtotal = document.getElementById('subtotal-val');
+    const subtotalTxt = subtotal.innerText;
+    const subTotalVal = parseInt(subtotalTxt);
+    const newTax = subTotalVal / 10;
+
+    const taxTotal = document.getElementById('tax-val');
+    taxTotal.innerText = newTax;
+
+    const total = document.getElementById('total-val');
+    total.innerText = subTotalVal + newTax;
+}
+
 
 
 // phone shopping
 document.getElementById('phone-increment-btn').addEventListener('click', function () {
 
     getCount(true, 'phone-input', 1219, 'phone-price');
-    setSubTotal();
+
 
 });
 
 document.getElementById('phone-decrement-btn').addEventListener('click', function () {
-
     getCount(false, 'phone-input', 1219, 'phone-price');
+
 
 
 });
 // case shopping
 document.getElementById('case-increment-btn').addEventListener('click', function () {
     getCount(true, 'case-input', 59, "case-price");
-    setSubTotal();
+
 });
 
 document.getElementById('case-decrement-btn').addEventListener('click', function () {
     getCount(false, 'case-input', 59, "case-price");
 
 });
-
 
